@@ -3,11 +3,17 @@ package main
 import (
   "net"
   "fmt"
+  "os"
 )
 
 func main() {
-  
-  ls, err := net.Listen("tcp",  "localhost:8080")
+
+  if len(os.Args) != 2 {
+    fmt.Println("please provide a port no") 
+    os.Exit(1)
+  }
+
+  ls, err := net.Listen("tcp", fmt.Sprintf("localhost:%s", os.Args[1]))
   c := make(chan net.Conn, 256)
 
   if err != nil {
